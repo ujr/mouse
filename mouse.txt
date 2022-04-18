@@ -3,9 +3,9 @@
     *******************
 
 
-Die Unit Mouse stellt Routinen zur einfachen Ben�tzung von
-Microsoft- und kompatiblen M�usen in Pascal-Programmen zur
-Verf�gung. Um mit dieser Unit arbeiten zu k�nnen, muss eine
+Die Unit Mouse stellt Routinen zur einfachen Benützung von
+Microsoft- und kompatiblen Mäusen in Pascal-Programmen zur
+Verfügung. Um mit dieser Unit arbeiten zu können, muss eine
 Maus vorhanden und ein Maustreiber geladen sein.
 
 
@@ -17,32 +17,32 @@ Beim Start eines Programms, das die Unit Mouse verwendet, testet
 die Unit automatisch, ob die Voraussetzungen zur Arbeit mit der
 Maus gegeben sind, das heisst, ob eine Maus angeschlossen und
 ein Maustreiber (MOUSE.COM oder MOUSE.SYS) geladen ist und kehrt
-wieder zum Programm zur�ck. Mit der Funktion MouseAvail kann ge-
-pr�ft werden, ob diese Initialisierung erfolgreich verlaufen ist.
-Bevor Routinen aus der Unit aufgerufen werden k�nnen, muss mit
+wieder zum Programm zurück. Mit der Funktion MouseAvail kann ge-
+prüft werden, ob diese Initialisierung erfolgreich verlaufen ist.
+Bevor Routinen aus der Unit aufgerufen werden können, muss mit
 der Routine MouseOn die Mausereignisverwaltung installiert wer-
 den. Diese Prozedur installiert einen Maus-Eventhandler, der bei
 jedem Ereignis in Verbindung mit der Maus (Klick, Bewegung) auf-
 gerufen wird, also den Programmablauf kurz unterbricht, und das
 aufgetretene Ereignis in einem Puffer speichert. Erneute Aufrufe
 von MouseOn haben nur noch einen Reset der Maus zur Folge. Mit
-der Prozedur MouseOff wird wieder der urspr�ngliche Zustand er-
+der Prozedur MouseOff wird wieder der ursprüngliche Zustand er-
 stellt. Die Routine GetMouseEvent dient zum lesen der Mausereig-
 nisse aus dem Puffer. Sie stellt sie dem Programm in Form eines
-tMouseEvent-Recors zur Verf�gung. Dieses Verfahren hat den gro�en
-Vorteil gegen�ber der direkten Mausabfrage, dass Mausereignisse
+tMouseEvent-Recors zur Verfügung. Dieses Verfahren hat den grossen
+Vorteil gegenüber der direkten Mausabfrage, dass Mausereignisse
 gespeichert werden, wenn das Programm gerade keine Zeit zur Be-
-arbeitung der Mauseingaben hat (�hnlich BIOS-Tastaturpuffer).
+arbeitung der Mauseingaben hat (ähnlich BIOS-Tastaturpuffer).
 Zwischengespeichert werden zweihundert Mausereignisse. Das ist
-verglichen mit den sechzehn Tastendr�cken im Tastaturpuffer sehr
-viel, kann im Grafikmodus jedoch recht bald gef�llt werden, wenn
-das Programm nicht regelm��ig die Mausereignisse aus dem Puffer
-ausliest. Um zuverl��ig auf die Benutzereingaben reagieren zu
-k�nnen, sollte der Inhalt des Ereignis-Puffers m�glichst oft
+verglichen mit den sechzehn Tastendrücken im Tastaturpuffer sehr
+viel, kann im Grafikmodus jedoch recht bald gefüllt werden, wenn
+das Programm nicht regelmässig die Mausereignisse aus dem Puffer
+ausliest. Um zuverlässig auf die Benutzereingaben reagieren zu
+können, sollte der Inhalt des Ereignis-Puffers möglichst oft
 ausgelesen werden.
-Eine zweite M�glchkeit der Mausabfrage besteht �ber das lesen der
+Eine zweite Möglchkeit der Mausabfrage besteht über das lesen der
 Variablen MouseX, MouseY, MouseEvent und ButtonState. Sie stellen
-den aktuellen Status der Maus dar; mehr dar�ber in der folgenden
+den aktuellen Status der Maus dar; mehr darüber in der folgenden
 detaillierten Besprechung der Routinen und Variablen.
 
 
@@ -51,29 +51,29 @@ detaillierten Besprechung der Routinen und Variablen.
    ========================
 
 Die Maustreiber (MOUSE.COM, MOUSE.SYS) arbeiten mit einem virtuel-
-len Koordinatensystem, das vom eingestellten Videomodus abh�ngig
-ist, jedoch nicht unbedingt mit dessen Koordinatensystem �berein-
+len Koordinatensystem, das vom eingestellten Videomodus abhängig
+ist, jedoch nicht unbedingt mit dessen Koordinatensystem überein-
 stimmt. Um trotztdem immer mit dem gewohnten Koordinatensystem
-arbeiten zu k�nnen, verf�gt die Unit Mouse �ber ein Konvertier-
-ungssystem, das den eingestellten Videomodus selbst�ndig erkennt
+arbeiten zu können, verfügt die Unit Mouse über ein Konvertier-
+ungssystem, das den eingestellten Videomodus selbständig erkennt
 und entsprechende Konvertierungsroutinen installiert. Diese Auf-
 gaben erledigt die Prozedur MouseOn, sofern die Boolsche Variable
-ResetMouse den Wert True enth�lt. Den Konvertierungsvorgang kann
+ResetMouse den Wert True enthält. Den Konvertierungsvorgang kann
 man auch selbst beeinflussen, indem man den Variablen
 
   ConvertToScreen (Konvertierung Mauskoordinatensystem zu
                    Bildschirmkoordinatensystem) und
   ConvertToMouse  (Bildschirm zu Maus)
 
-die gew�nschte Konvertierungsroutine (deren Name mit cnv beginnt)
-zuweist oder cnvNoConvert, wenn keine Konvertierung gew�nscht wird.
-Sollte aus irgendeinem Grund andere als die standardm��ig vorhand-
-enen Konvertierungsroutinen ben�tigt werden, k�nnen sie solche auch
-selbst schreiben. Sie m��en als eine Far-Prozedur ohne Parameter
+die gewünschte Konvertierungsroutine (deren Name mit cnv beginnt)
+zuweist oder cnvNoConvert, wenn keine Konvertierung gewünscht wird.
+Sollte aus irgendeinem Grund andere als die standardmässig vorhand-
+enen Konvertierungsroutinen benötigt werden, können sie solche auch
+selbst schreiben. Sie müssen als eine Far-Prozedur ohne Parameter
 deklariert sein. Beim Aufruf der Routine steht in den Prozessor-
 registern CX und DX die zu konvertierende X- und Y-Koordinate. In
-den selben Registern m�ssen die konvertierten Koordinaten zur�ckge-
-geben werden. Der Inhalt aller anderen Register darf nicht ge�ndert
+den selben Registern müssen die konvertierten Koordinaten zurückge-
+geben werden. Der Inhalt aller anderen Register darf nicht geändert
 werden!
 
 
@@ -82,9 +82,9 @@ werden!
    =============================
 
 
-Aus Kompatibilit�tsgr�nden sollte man immer die Namen der Konstanten
+Aus Kompatibilitätsgründen sollte man immer die Namen der Konstanten
 und nicht ihre Werte verwenden! (Deshalb wurden die Werte fast aus-
-nahmslos auch gar nicht aufgef�hrt)
+nahmslos auch gar nicht aufgeführt)
 
 
 Die ev_XXXX - Konstanten
@@ -92,17 +92,17 @@ Die ev_XXXX - Konstanten
 
 Deklaration:    ev_NoEvent         { kein Mausereignis vorliegend }
                 ev_MouseMove       { Maus wurde bewegt }
-                ev_LButtonDown     { Linke Taste gedr�ckt }
-                ev_RButtonDown     { Rechte Taste gedr�ckt }
-                ev_MButtonDown     { Mittlere Taste gedr�ckt }
+                ev_LButtonDown     { Linke Taste gedrückt }
+                ev_RButtonDown     { Rechte Taste gedrückt }
+                ev_MButtonDown     { Mittlere Taste gedrückt }
                 ev_LButtonUp       { Linke Taste losgelassen }
                 ev_RButtonUp       { Rechte Taste losgelassen }
                 ev_MButtonUp       { Mittlere Taste losgelassen }
                 ev_LButtonDblClk   { Doppelklick mit linker Taste }
                 ev_RButtonDblClk   { Doppelklick mit rechter Taste }
                 ev_MButtonDblClk   { Doppelklick mit mittlerer Taste }
-                ev_MouseAuto       { Taste wird gedr�ckt gehalten }
-                ev_AnyButtonDown   { beliebige Taste gedr�ckt }
+                ev_MouseAuto       { Taste wird gedrückt gehalten }
+                ev_AnyButtonDown   { beliebige Taste gedrückt }
                 ev_AnyButtonUp     { beliebige Taste losgelassen }
                 ev_AnyButtonDblClk { Doppelklick mit beliebiger Taste }
                 ev_LButtonEvent    { Ereignis der linken Taste }
@@ -112,21 +112,21 @@ Deklaration:    ev_NoEvent         { kein Mausereignis vorliegend }
 
 Funktion:       Die ev_XXXX - Konstanten finden Verwendung bei der
                 Abfrage des Feldes Event des tMouseEvent-Records.
-                Jede Konstante steht f�r das oben beschriebene Ereignis.
+                Jede Konstante steht für das oben beschriebene Ereignis.
                 Die Anweisung
 
                         GetMouseEvent( E );
                         if ( E.Event = ev_LButtonDown ) then LeftPress;
 
                 ruft die Routine "LeftPress" auf, wenn die linke Maustaste
-                gedr�ckt wurde. Soll eine Prozedur aufgerufen werden, nach-
-                dem eine beliebige Taste gedr�ckt wurde, m�sste die Anweis-
+                gedrückt wurde. Soll eine Prozedur aufgerufen werden, nach-
+                dem eine beliebige Taste gedrückt wurde, müsste die Anweis-
                 ung wie folgt lauten:
 
                         GetMouseEvent( E );
                         if ( E.Event and ev_AnyButtonDown <> 0 ) then ...
 
-                F�r die Ereignisse ev_AnyButtonDown bis und mit
+                Für die Ereignisse ev_AnyButtonDown bis und mit
                 ev_AnyButtonEvent muss die zweite Anweisung verwendet
                 werden, da es sich immer um eine bestimmte Menge von
                 Ereignissen handelt und nicht um ein Einzelereignis.
@@ -150,7 +150,7 @@ Deklaration:    mc_User          { Benutzerdefinierter Mauscursor }
                 mc_DragDiagonal  { Vierfachpfeil, diagonal }
                 mc_Cross         { Fadenkreuz }
                 mc_Wait          { Sanduhr }
-                mc_IBeam         { I-f�rmiger Balken f�r Texteingabe }
+                mc_IBeam         { I-förmiger Balken für Texteingabe }
                 mc_TextStandard  { Standard Textmodus Cursor }
                 mc_TextBlock     { Grauer Blockcursor im Textmodus }
                 mc_TextBlink     { Zeichen unter Cursor blinkt, Textmodus }
@@ -190,7 +190,7 @@ Deklaration:    ConvertProc = procedure;
 
 Funktion:       Eine Variable, die die Adresse einer Konvertierungs-
                 routine speichern soll, ist dieses Typs. Sie werden
-                ihn kaum ben�tigen.
+                ihn kaum benötigen.
 
 Vergleiche:     Das Konvertierungssystem
 
@@ -201,13 +201,13 @@ tGraphCursor
 
 Deklaration:    tGraphCursor = array[0..31] of Word;
 
-Funktion:       Dient der Definition von Variablen zur �bergabe der
+Funktion:       Dient der Definition von Variablen zur Übergabe der
                 Cursor- und Screenmask an die SetGraphCursor-Prozedur.
                 In den ersten 16 Words muss die Screenmask abgelegt
                 werden, in den zweiten 16 Words die Cursormask.
 
 Vergleiche:     SetGraphCursor, Beispielprogramm 'MOUSTYLE'.
-                Mit dem Dienstprogramm STYLES k�nnen Sie diesen
+                Mit dem Dienstprogramm STYLES können Sie diesen
                 Array komfortabel mit korrekten Werten versehen!
 
 
@@ -227,8 +227,8 @@ Deklaration:    tMouseEvent = record
 Funktion:       Dieses Typs sind die Mausereignisse, die GetMouseEvent
                 liefert. In Event wird der Code des eingetretenen Ereig-
                 nisses gespeichert (vgl. ev_XXXX - Konstanten). In
-                Buttons werden momentan gedr�ckte Tasten durch je ein
-                gesetztes Bit repr�sentiert (Bit 1: linke Taste, Bit 2:
+                Buttons werden momentan gedrückte Tasten durch je ein
+                gesetztes Bit repräsentiert (Bit 1: linke Taste, Bit 2:
                 rechte Taste, Bit3: mittlere Taste). Zur Abfrage dienen
                 die mb_XXXX - Konstanten:
 
@@ -236,13 +236,13 @@ Funktion:       Dieses Typs sind die Mausereignisse, die GetMouseEvent
                   { linke Taste }
 
                 if (Buttons and (mb_LeftButton or mb_RightButton) <> 0) then
-                  { linke oder rechte Taste momentan gedr�ckt }
+                  { linke oder rechte Taste momentan gedrückt }
 
-                �ber tMouseEvent.Where wird auf einen Longint zugegriffen,
+                Über tMouseEvent.Where wird auf einen Longint zugegriffen,
                 in dessen Lo-Word die X-Koordinate und in dessen Hi-Word
                 die Y-Koordinate gespeichert sind. Man kann so das Koordi-
                 natenpaar in einer Variable weitergeben und bearbeiten.
-                Einfacher ist der Zugriff �ber MouseX und MouseY: sie ent-
+                Einfacher ist der Zugriff über MouseX und MouseY: sie ent-
                 halten die X- und Y-Koordinate des Mauszeigers.
 
                         GetMouseEvent( E );
@@ -268,7 +268,7 @@ MouseX
 Deklaration:    var MouseX: Integer;
 
 Funktion:       Widerspiegelt die aktuelle X-Koordinate der Mausposition
-                in Abh�ngigkeit der gesetzten Konvertierungs-Prozedur
+                in Abhängigkeit der gesetzten Konvertierungs-Prozedur
 
 Vergleiche:     "Das Konvertierungssystem"
 
@@ -280,7 +280,7 @@ MouseY
 Deklaration:    var MouseY: Integer;
 
 Funktion:       Widerspiegelt die aktuelle Y-Koordinate der Mausposition
-                in Abh�ngigkeit der gesetzten Konvertierungs-Prozedur
+                in Abhängigkeit der gesetzten Konvertierungs-Prozedur
 
 Vergleiche:     "Das Konvertierungssystem"
 
@@ -291,15 +291,15 @@ MouseEvent
 
 Deklaration:    var MouseEvent: Word;
 
-Funktion:       Enth�lt das zuletzt eingetretene Mausereignis, wobei
+Funktion:       Enthält das zuletzt eingetretene Mausereignis, wobei
                 die Bits bedeuten:
 
                 Bit 0 gesetzt:  Maus bewegt                (Bitwert =  1)
-                Bit 1 gesetzt:  Linke Taste gedr�ckt       (Bitwert =  2)
+                Bit 1 gesetzt:  Linke Taste gedrückt       (Bitwert =  2)
                 Bit 2 gesetzt:  Linke Taste losgelassen    (Bitwert =  4)
-                Bit 3 gesetzt:  Rechte Taste gedr�ckt      (Bitwert =  8)
+                Bit 3 gesetzt:  Rechte Taste gedrückt      (Bitwert =  8)
                 Bit 4 gesetzt:  Rechte Taste losgelassen   (Bitwert = 16)
-                Bit 5 gesetzt:  Mittlere Taste gedr�ckt    (Bitwert = 32)
+                Bit 5 gesetzt:  Mittlere Taste gedrückt    (Bitwert = 32)
                 Bit 6 gesetzt:  Mittlere Taste losgelassen (Bitwert = 64)
                 Bits 7 - 15:    ohne Bedeutung
 
@@ -312,7 +312,7 @@ ButtonState
 
 Deklaration:    var ButtonState: Byte;
 
-Funktion:       Enth�lt den aktuellen Tastenstatus (vergleiche
+Funktion:       Enthält den aktuellen Tastenstatus (vergleiche
                 tMouseEvent.Buttons)
 
 
@@ -324,7 +324,7 @@ Deklaration:    var SwapButtons: Boolean;
 
 Funktion:       Wird SwapButtons auf TRUE gesetzt, vertauscht der
                 Event-Handler die linke und die rechte Maustaste
-                (Linksh�nder). Standardm�ssig ist SwapButtons FALSE.
+                (Linkshänder). Standardmässig ist SwapButtons FALSE.
 
 
 
@@ -334,7 +334,7 @@ DblClkTime
 Deklaration:    const DblClkTime: Word = 8;
 
 Funktion:       DblClkTime bestimmt, wieviele Timer-Ticks zwischen
-                zwei Mausklicks verstreichen d�rfen, da� diese noch
+                zwei Mausklicks verstreichen dürfen, dass diese noch
                 als Doppelklick anerkannt werden. Ein Timer-Tick
                 dauert 1/18.2 Sekunden.
 
@@ -346,9 +346,9 @@ AutoTime
 Deklaration:    const AutoTime: Word = 8;
 
 Funktion:       AutoTime bestimmt, wieviele Timer-Ticks verstreichen
-                m�ssen, dass eine ev_MouseAuto - Meldung erzeugt wird,
-                wenn eine Maustaste gedr�ckt gehalten wird (z.B. Auf den
-                Kn�pfen einer Scroll-Bar).
+                müssen, dass eine ev_MouseAuto - Meldung erzeugt wird,
+                wenn eine Maustaste gedrückt gehalten wird (z.B. Auf den
+                Knöpfen einer Scroll-Bar).
 
 
 
@@ -361,7 +361,7 @@ Funktion:       DoubleMoveX bestimmt, um wieviele Einheiten der Maus-
                 cursor zwischen zwei Klicks in horizontaler Richtung
                 bewegt werden darf, dass diese noch als Doppelclick
                 erkannt werden. Der Standardwert von DoubleMoveX ist
-                vom gesetzten Videomodus abh�ngig (vgl. "Die Maus in
+                vom gesetzten Videomodus abhängig (vgl. "Die Maus in
                 den verschiedenen Videomodi" ).
 
 
@@ -381,13 +381,13 @@ ResetMouse
 Deklaration:    var ResetMouse: Boolean;
 
 Funktion:       Bestimmt welche Parameter bei einem Aufruf von MouseOn
-                zur�ckgesetzt werden. Wenn ResetMouse FALSE ist bleiben
+                zurückgesetzt werden. Wenn ResetMouse FALSE ist bleiben
                 die Variabelwerte von SwapButtons, DoubleMoveX, Double-
                 MoveY, DblClkTime und AutoTime erhalten; ebenso die
                 installierten Konvertierungsroutinen und die Sichtbarkeit
                 des Mauscursors. Ist ResetMouse TRUE, werden diese Variab-
                 len auf ihre Standardwerte (die vom gesetzten Videomodus
-                abh�ngig sind) zur�ckgesetzt und der Mauscursor ausgeblen-
+                abhängig sind) zurückgesetzt und der Mauscursor ausgeblen-
                 det.
 
 Vergleiche:     MouseOn, "Die Variablen der Unit Mouse", "Die Maus in
@@ -400,7 +400,7 @@ TextCursorSMask
 
 Deklaration:    var TextCursorSMask: Word;
 
-Funktion:       Diese Variabel enth�lt den aktuellen Wert der
+Funktion:       Diese Variabel enthält den aktuellen Wert der
                 Screenmask des Textcursors. Der Defaultwert ist $77FF.
 
 
@@ -410,7 +410,7 @@ TextCursorCMask
 
 Deklaration:    var TextCursorCMask: Word;
 
-Funktion:       Diese Variabel enth�lt den aktuellen Wert der
+Funktion:       Diese Variabel enthält den aktuellen Wert der
                 Cursormask des Textcursors. Der Defaultwert ist $7700.
 
 
@@ -434,7 +434,7 @@ Deklaration:    const ConvertToScreen: ConvertProc = cnvNoConvert;
 Funktion:       In dieser Variabel steht die Adresse der
                 Konvertierungsprozedur Maus zu Bildschirm. Wird eine
                 andere als die gerade gesetzte Konvertierungsprozedur
-                gew�nscht, kann die Adresse dieser anderen hier
+                gewünscht, kann die Adresse dieser anderen hier
                 eingetragen werden.
 
                 Bsp:    procedure MyConvertProc; far; assembler;
@@ -452,7 +452,7 @@ Funktion:       In dieser Variabel steht die Adresse der
                         ConvertToScreen := MyConvertProc;
 
                 Der Code im Beispiel entspricht dem der cnv80x25_S
-                Standard-Konvertierungsprozedur, die f�r die Text-
+                Standard-Konvertierungsprozedur, die für die Text-
                 modi mit 80 x 25 Zeichen zur Konvertierung Maus zu
                 Bildschirm verwendet wird.
 
@@ -468,7 +468,7 @@ Deklaration:    const ConvertToMouse: ConvertProc = cnvNoConvert
 Funktion:       In dieser Variabel steht die Adresse der
                 Konvertierungsprozedur Bildschirm zu Maus. Wird eine
                 andere als die gerade gesetzte Konvertierungsprozedur
-                gew�nscht, kann hier die Adresse dieser anderen
+                gewünscht, kann hier die Adresse dieser anderen
                 Prozedur eingetragen werden.
 
 Vergleiche:     "Das Konvertierungssystem", ConvertToScreen, cnvXXXX-
@@ -494,15 +494,15 @@ Deklaration:    procedure cnvNoConvert;    { Keine Konvertierung }
                 procedure cnv320x200_S;    { Graphikmodus, 320x200 Pixel }
                 procedure cnv320x200_M;    { Graphikmodus, 320x200 Pixel }
 
-                { f�r hier nicht aufgef�hrte Videomodi wird cnvNoConvert
+                { für hier nicht aufgeführte Videomodi wird cnvNoConvert
                   verwendet }
 
 Funktion:       Die vordefinierten Konvertierungsprozeduren
 
-Erkl�rung:      Diese Prozeduren enthalten den Code zur Konvertierung
+Erklärung:      Diese Prozeduren enthalten den Code zur Konvertierung
                 der virtuellen Mauskoordinaten zu Bildschirmkoordinaten
                 (..._S) bzw. der Bildschirmkoordinaten zu virtuellen
-                Mauskoordinaten (..._M). Diese Prozedurnamen k�nnen
+                Mauskoordinaten (..._M). Diese Prozedurnamen können
                 den Variablen ConvertToScreen (..._S) und ConvertToMouse
                 (..._M) zugewiesen werden, um eine bestimmte Konvertierung
                 zu erzwingen. Normalerweise sollte die Unit Mouse jedoch
@@ -511,7 +511,7 @@ Erkl�rung:      Diese Prozeduren enthalten den Code zur Konvertierung
                 dass ResetMouse TRUE ist! Es empfielt sich daher, die
                 Prozedur MouseOn nach jedem Videomoduswechsel aufzurufen
                 und zu beachten, dass dazu die Variable ResetMouse den
-                Wert TRUE (=Voreinstellung) enth�lt!!!
+                Wert TRUE (=Voreinstellung) enthält!!!
 
 Vergleiche:     "Das Konvertierungssystem", ConvertToMouse, ConvertToScreen
 
@@ -521,9 +521,9 @@ ClearQueue
 -------------------
 Deklaration:    procedure ClearQueue;
 
-Funktion:       L�scht den Ereignispuffer
+Funktion:       Löscht den Ereignispuffer
 
-Erkl�rung:      ClearQueue l�scht den Ereignispuffer. Das heisst,
+Erklärung:      ClearQueue löscht den Ereignispuffer. Das heisst,
                 dass alle Mausereignisse, die der Eventhandler in
                 den Puffer geschrieben hat und die noch nicht mit
                 GetMouseEvent aus dem Puffer geholt wurden, ver-
@@ -541,11 +541,11 @@ Deklaration:    function GetCursorStyle : Integer;
 
 Funktion:       Liefert die Nummer des aktuellen Cursors
 
-Erkl�rung:      GetCursorStyle �bergibt die Nummer des aktuell ein-
+Erklärung:      GetCursorStyle übergibt die Nummer des aktuell ein-
                 gestellten Cursors (eine der mc_XXXX - Konstanten).
-                Wurde der aktuelle Cursor nicht �ber SetCursorStyle
-                eingestellt, sondern �ber SetTextCursor oder Set-
-                GraphCursor, wird mc_User �bergeben.
+                Wurde der aktuelle Cursor nicht über SetCursorStyle
+                eingestellt, sondern über SetTextCursor oder Set-
+                GraphCursor, wird mc_User übergeben.
 
 Vergleiche:     SetTextCursor, SetGraphCursor, SetCursorStyle,
                 mc_XXXX - Konstanten
@@ -559,10 +559,10 @@ Deklaration:    procedure GetMouseEvent( var Event: tMousEvent );
 
 Funktion:       Liest ein Mausereignis aus dem Ereignispuffer
 
-Erkl�rung:      GetMouseEvent holt ein Mausereignis aus dem vom
-                Eventhandler verwalteten Ereignispuffer und �bergibt
+Erklärung:      GetMouseEvent holt ein Mausereignis aus dem vom
+                Eventhandler verwalteten Ereignispuffer und übergibt
                 es in Form eines tMouseEvent - Records. Ist der Puffer
-                leer, wird ein ev_NoEvent - Ereignis �bergeben.
+                leer, wird ein ev_NoEvent - Ereignis übergeben.
 
 Vergleiche:     tMouseEvent - Record, ev_XXXX - Konstanten, MouseOn
 
@@ -575,11 +575,11 @@ Deklaration:    procedure GetMousePos( var X, Y: Integer );
 
 Funktion:       Ermittelt die Mausposition
 
-Erkl�rung:      GetMousePos ermittelt die aktuelle Mausposition in
-                Abh�ngigkeit der gesetzten Konvertierungsroutine. Wenn
+Erklärung:      GetMousePos ermittelt die aktuelle Mausposition in
+                Abhängigkeit der gesetzten Konvertierungsroutine. Wenn
                 man die Mausposition in Erfahrung bringen will, bevor
                 der Benutzer sie bewegt hat oder wenn der Ereignispuffer
-                gel�scht wurde (ClearQueue) und der Benutzer sie
+                gelöscht wurde (ClearQueue) und der Benutzer sie
                 noch nicht wieder bewegt hat, muss man sich dieser
                 Prozedur bedienen, weil noch kein ev_MouseMove - Ereignis
                 erzeugt werden konnte und folglich auch noch keine
@@ -596,7 +596,7 @@ Deklaration:    procedure HideMouse;
 
 Funktion:       Ausblenden des Mauscursors;
 
-Erkl�rung:      HideMouse blendet den Mauscursor auf dem Bildschirm
+Erklärung:      HideMouse blendet den Mauscursor auf dem Bildschirm
                 aus. Folgende Aufrufe von MouseVisible geben FALSE.
                 Auch wenn der Mauscursor unsichtbar ist, funktioniert
                 die Mausabfrage immer noch. MouseOff ruft automatisch
@@ -605,7 +605,7 @@ Erkl�rung:      HideMouse blendet den Mauscursor auf dem Bildschirm
                 werden, bevor etwas in den Bildschirm geschrieben wird!
                 Danach macht man die Maus wieder sichtbar durch einen
                 Aufruf von ShowMouse. Dies ist wichtig, weil es sonst
-                zu St�rerscheinungen auf dem Bildschirm kommen kann,
+                zu Störerscheinungen auf dem Bildschirm kommen kann,
                 wenn sich die Maus gerade an der Position befindet, an
                 der gezeichnet wird. (Der Maustreiber speichert den
                 Hintergrund bevor er den Mauscursor zeichet und restau-
@@ -624,10 +624,10 @@ Deklaration:    function MouseAvail: Boolean;
 
 Funktion:       Liefert TRUE, wenn Maus und Treiber installiert sind.
 
-Erkl�rung:      Beim Programmstart pr�ft die Unit Mouse, ob eine Maus
+Erklärung:      Beim Programmstart prüft die Unit Mouse, ob eine Maus
                 installiert und ein Maustreiber geladen ist. In diesem
                 Fall liefert ein Aufruf von MouseAvail TRUE und die
-                Routinen der Unit k�nnen verwendet werden, ansonsten
+                Routinen der Unit können verwendet werden, ansonsten
                 FALSE und die meisten Routinen bleiben wirkungslos.
 
 
@@ -639,7 +639,7 @@ Deklaration:    function MouseButtons: Byte;
 
 Funktion:       Ermittelt die Zahl der Maustasten
 
-Erkl�rung:      MouseButtons liefert die Anzahl der Maustasten oder Null,
+Erklärung:      MouseButtons liefert die Anzahl der Maustasten oder Null,
                 wenn keine Maus oder kein Maustreiber installiert ist.
 
 
@@ -651,7 +651,7 @@ Deklaration:    function MouseHandling: Boolean;
 
 Funktion:       Gibt TRUE, wenn das Maus-Eventhandling-System aktiv ist
 
-Erkl�rung:      MouseHandling liefert TRUE, wenn einem Aufruf von MouseOn
+Erklärung:      MouseHandling liefert TRUE, wenn einem Aufruf von MouseOn
                 noch keiner von MouseOff gefolgt ist, das heisst, der Maus-
                 Eventhandler aktiv ist und den Ereignispuffer verwaltet.
 
@@ -666,8 +666,8 @@ Deklaration:    procedure MouseOff;
 
 Funktion:       Deaktiviert den Event-Handler
 
-Erkl�rung:      MouseOff deaktiviert den Eventhandler, der durch
-                MouseOn installiert wurde und l�scht den Ereignispuffer.
+Erklärung:      MouseOff deaktiviert den Eventhandler, der durch
+                MouseOn installiert wurde und löscht den Ereignispuffer.
                 Folgende Aufrufe von MouseEvents liefern FALSE und die
                 meisten Routinen der Unit sind wirkungslos. Der Mauscursor
                 wird ausgeblendet, wenn er dies nicht schon ist.
@@ -678,10 +678,10 @@ Erkl�rung:      MouseOff deaktiviert den Eventhandler, der durch
                 einzuschalten (MouseOn). Am Ende eines Programms muss
                 MouseOff nicht explizit aufgerufen werden, da dies die
                 Exit-Prozedur der Unit Mouse erledigt. Voraussetzung
-                daf�r ist allerdings, dass ihr Programm - sollte es von
+                dafür ist allerdings, dass ihr Programm - sollte es von
                 der Exit-Prozedur gebrauch machen - der Variablen
                 'ExitProc' an erster stelle in ihrer Exit-Prozedur wieder
-                den urspr�nglichen Wert zuweist!
+                den ursprünglichen Wert zuweist!
 
 Vergleiche:     MouseOn, MouseEvents, ShowMouse, HideMouse
 
@@ -694,24 +694,24 @@ Deklaration:    procedure MouseOn;
 
 Funktion:       Leitet die Arbeit mit der Maus ein
 
-Erkl�rung:      Diese Prozedur installiert den Event-Handler, der bei
+Erklärung:      Diese Prozedur installiert den Event-Handler, der bei
                 jedem Mausereignis aufgerufen wird und dieses in einem
-                Puffer speichert, und die f�r den gegenw�rtigen Video-
+                Puffer speichert, und die für den gegenwärtigen Video-
                 modus geeignetsten Konvertierungsroutinen. Der Event-
-                Handler wird f�r die Abfrage �ber die Variablen (MouseX,
-                MouseY, ButtonState, MouseEvent), wie auch �ber die
-                GetMouseEvent - Routine ben�tigt. Der Aufruf von MouseOn
+                Handler wird für die Abfrage über die Variablen (MouseX,
+                MouseY, ButtonState, MouseEvent), wie auch über die
+                GetMouseEvent - Routine benätigt. Der Aufruf von MouseOn
                 muss also dem Aufruf aller anderen Routinen aus dieser
-                Unit vorausgehen, wenn diese vern�nftig funktionieren
+                Unit vorausgehen, wenn diese vernünftig funktionieren
                 sollen. Ausgenommen sind MouseAvail und MouseButtons.
-                Der urspr�ngliche Zustand wird mit MouseOff wieder er-
+                Der ursprüngliche Zustand wird mit MouseOff wieder er-
                 stellt.
                 Weitere Aufrufe von MouseOn, bevor MouseOff aufgerufen
                 wird, haben lediglich einen Reset der Maus zur Folge.
                 Dabei bestimmt die boolsche Variable ResetMouse, welche
-                Parameter auf ihre Startwerte zur�ckgesetzt werden (siehe
-                bei ResetMouse). Da sich die Maus �ber einen Hardware-
-                Interrupt bemerkbar macht, sollten diese nicht unterdr�ckt
+                Parameter auf ihre Startwerte zurückgesetzt werden (siehe
+                bei ResetMouse). Da sich die Maus über einen Hardware-
+                Interrupt bemerkbar macht, sollten diese nicht unterdrückt
                 werden (Assembler-Befehl CLI). MouseOn blendet den Maus-
                 cursor aus. Er muss also mit ShowMouse explizit wieder
                 eingeblendet werden (es sei denn, ResetMouse sei FALSE).
@@ -730,7 +730,7 @@ Deklaration:    function MouseVisible : Boolean;
 
 Funktion:       Ermittelt, ob Maus sichtbar ist
 
-Erkl�rung:      MouseVisible liefert TRUE, wenn der Mauscursor gerade
+Erklärung:      MouseVisible liefert TRUE, wenn der Mauscursor gerade
                 sichtbar ist, ansonsten FALSE. Mit Hilfe der Funktionen
                 ShowMouse und HideMouse kann der Mauscursor ein- und
                 ausgeblendet werden.
@@ -746,8 +746,8 @@ Deklaration:    procedure SetCursorStyle( S: Integer );
 
 Funktion:       Setzt einen vordefinierten Cursor-Stil
 
-Erkl�rung:      Diese Routine w�hlt einen der 14 vordefinierten
-                Grafikcursor oder einen der drei Textcursor. F�r den
+Erklärung:      Diese Routine wählt einen der 14 vordefinierten
+                Grafikcursor oder einen der drei Textcursor. Für den
                 Parameter S sollte man die mc_XXXX - Konstanten verwenden.
 
 Vergleiche:     SetTextCursor, SetGraphCursor, mc_XXXX - Konstanten,
@@ -763,22 +763,22 @@ Deklaration:    procedure SetGraphCursor( X,Y: Integer; var Cursor );
 
 Funktion:       Bestimmt das Erscheinungsbild des Cursors im Grafikmodus
 
-Erkl�rungen:    Beim Erzeugen des Grafikcursors wird mit zwei
+Erklärungen:    Beim Erzeugen des Grafikcursors wird mit zwei
                 32-Byte grossen Bitfeldern gearbeitet. Ein gesetztes
                 Bit im ersten Bitfeld bedeutet, dass der entsprechende
-                Bildpunkt erhalten bleibt, ist das Bit gel�scht, wird
-                auch der Bildpunkt gel�scht (AND-Verkn�pfung, Screenmask).
+                Bildpunkt erhalten bleibt, ist das Bit gelöscht, wird
+                auch der Bildpunkt gelöscht (AND-Verknüpfung, Screenmask).
                 Ein gesetztes Bit im zweiten Bitfeld bewirkt, dass ein
-                Punkt gesetzt wird (XOR-Verkn�pfung, Cursormask).
+                Punkt gesetzt wird (XOR-Verknüpfung, Cursormask).
                 Die Parameter X und Y bezeichnen der Abstand des Bezugs-
                 punktes vom linken, bzw. oberen Rand des Cursorbildes. An
-                Cursor sollte ein 64-Byte Bitfeld �bergeben werden, wobei
+                Cursor sollte ein 64-Byte Bitfeld übergeben werden, wobei
                 in den ersten 32 Bytes die Screenmask enthalten sein muss
                 und in den zweiten 32 Bytes die Cursormask. Speziell
                 hierzu wurde der Typ tGraphCursor als array[0..31] of Word
-                deklariert. N�heres dazu im Beispielprogramm 'CURSTYLE.PAS'.
+                deklariert. Näheres dazu im Beispielprogramm 'CURSTYLE.PAS'.
                 und im Dienstprogramm 'STYLES', mit welchem beliebige
-                Grafik-Cursor erstellt werden k�nnen.
+                Grafik-Cursor erstellt werden können.
 
 Vergleiche:     SetTextCursor, SetCursorStyle, tGraphCursor,
                 Beispielprogramme, Dienstprogramm 'STYLES'
@@ -792,7 +792,7 @@ Deklaration:    procedure SetMousePos( X,Y: Integer );
 
 Funktion:       Verschiebt den Mauszeiger
 
-Erkl�rung:      Diese Funktion verschiebt den Mauscursor an die
+Erklärung:      Diese Funktion verschiebt den Mauscursor an die
                 Stelle (X/Y). Das Koordinatensystem bezieht sich auf den
                 virtuellen Mausbildschirm, wenn keine Konvertierungsfunktion
                 installiert ist, ansonsten entsprechend der Konvertierungs-
@@ -809,9 +809,9 @@ SetMouseRange
 
 Deklaration:    procedure SetMouseRange( XA, YA, XB, YB: Integer );
 
-Funktion:       Bewegungsbereich der Maus einschr�nken
+Funktion:       Bewegungsbereich der Maus einschränken
 
-Erkl�rung:      Der Bereich, in dem sich die Maus bewegen kann, kann
+Erklärung:      Der Bereich, in dem sich die Maus bewegen kann, kann
                 durch diese Funktion begrenzt werden. Die Parameter
                 der Funktion beziehen sich auf den virtuellen Maus-
                 bildschirm, wenn keine Konvertierungsfunktion installiert
@@ -832,14 +832,14 @@ Deklaration:    procedure SetMouseSpeed( SpeedX, SpeedY: Integer );
 
 Funktion:       Definiert die Mauszeigergeschwindigkeit
 
-Erkl�rung:      Die Parameter SpeedX und SpeedY geben an, um wieviele
+Erklärung:      Die Parameter SpeedX und SpeedY geben an, um wieviele
                 Mickeys (=0.127mm) die Maus bewegt werden muss, damit der
-                Mauscursor 8 Pixel wandert. Kleine Werte f�r SpeedX und
+                Mauscursor 8 Pixel wandert. Kleine Werte für SpeedX und
                 SpeedY lassen kleine Mausbewegungen grosse Auswirkungen
                 haben, bei grossen Werten muss man die Maus weit schieben,
                 um den Cursor zu bewegen. Bei negativen Werten, bewegt
                 sich der Mauscursor entgegengesetzt zur Mausbewegung.
-                Null darf nicht �bergeben werden (Aufruf wird in diesem
+                Null darf nicht übergeben werden (Aufruf wird in diesem
                 Fall ignoriert).
 
 
@@ -852,19 +852,19 @@ Deklaration:    procedure SetTextCursor( HardCursor: Boolean;
 
 Funktion:       Definiert das Erscheinungsbild des Cursors im Textmodus
 
-Erkl�rung:      Mit SetTextCursor wird das Erscheinungsbild des
+Erklärung:      Mit SetTextCursor wird das Erscheinungsbild des
                 Mauscursors im Textmodus definiert. Ist HardCursor True,
                 wird der aus Textmodus-Programmen wohlbekannte blinkende
                 Cursor verwendet, wobei SMask und CMask die Start- und
                 Endzeile bezeichnen. Ist HardCursor False, wird der
                 Softwarecursor verwendet. Dabei bedeuten SMask und
                 CMask Screenmask und Cursormask. Das Zeichen unter dem
-                Cursor wird in einer UND-Verkn�pfung mit der Screenmask
-                verkn�pft und dieses Ergebnis in einer XOR-Verkn�pfung
+                Cursor wird in einer UND-Verknüpfung mit der Screenmask
+                verknüpft und dieses Ergebnis in einer XOR-Verknüpfung
                 mit der Cursormask. Die Bits der Screenmask bestimmen
                 also, welche  Bits des Zeichen- und Attribut-Bytes eines
                 Bildschirmzeichens erhalten (Bit gesetzt) bzw. auf Null
-                gesetzt werden (Bit gel�scht). Die XOR-Verkn�pung bestimmt
+                gesetzt werden (Bit gelöscht). Die XOR-Verknüpung bestimmt
                 dann, was zum Erhaltenen neu dazukommt.
 
 Vergleiche:     SetGraphCursor, SetCursorStyle, mc_XXXX - Konstanten
@@ -878,7 +878,7 @@ Deklaration:    procedure ShowMouse;
 
 Funktion:       Einblenden des Mauscursors
 
-Erkl�rung:      ShowMouse blendet den Mauscursor auf dem Bildschirm
+Erklärung:      ShowMouse blendet den Mauscursor auf dem Bildschirm
                 ein. Folgende Aufrufe von MouseVisible geben TRUE. Da
                 nach MouseOn der Cursor ausgeblendet ist (sofern die
                 Variable ResetMouse TRUE ist), muss man ihn zuerst
@@ -893,11 +893,11 @@ Vergleiche:     HideMouse, MouseVisible, ResetMouse
    =======================================
 
 
-Die folgende Tabelle gibt Auskunft �ber den Umgang des Maustreibers
+Die folgende Tabelle gibt Auskunft über den Umgang des Maustreibers
 und der Unit Mouse mit den verschiedenen BIOS - Videomodi.
 
 
-Video- | Aufl�sung 1)  Grafik-| max. Mauskoordinaten  | Konv.Prozedur  | 2)
+Video- | Auflösung 1)  Grafik-| max. Mauskoordinaten  | Konv.Prozedur  | 2)
 Modus  |               karte  | mit Konv. | ohne Konv | (Standard)     |
 -------+----------------------+-----------+-----------+----------------+-----
  00hex | 40x25 Zeichen EGA/VGA| (40/25)*  | (624/192) | cnv40x25_S/M   | 0 0
@@ -919,7 +919,7 @@ Modus  |               karte  | mit Konv. | ohne Konv | (Standard)     |
 
  *   Die minimalen Koordinaten sind hier nicht (0/0) sondern (1/1),
      wie bei der CRT-Unit!
- 1)  F�r weitere Informationen zu den Videomodi (z.B. Bildschirmseiten,
+ 1)  Für weitere Informationen zu den Videomodi (z.B. Bildschirmseiten,
      Farbanzahl) wende man sich an die Fachliteratur
  2)  Die erste Zahl entspricht dem Standardwert von DoubleMoveX,
      die zweite von DoubleMoveY
@@ -927,7 +927,7 @@ Modus  |               karte  | mit Konv. | ohne Konv | (Standard)     |
 
 
 
-   VERSION, COPYRIGHT, ZUBEH�R
+   VERSION, COPYRIGHT, ZUBEHÖR
    ===========================
 
 Unit Mouse
@@ -943,9 +943,9 @@ Dateiliste:
    - CURSTYLE.PAS   (Demo zu den Cursorstilen im Grafikmodus)
    - MOUSPEED.PAS   (Demo zur Mausgeschwindigkeit)
    - MOUSEPOS.PAS   (Demo zur Mauspositionierung und Positionsabfrage)
-   - MOURANGE.PAS   (Demo zur Mausbereichsbeschr�nkung)
+   - MOURANGE.PAS   (Demo zur Mausbereichsbeschränkung)
    - TEXTCUR.PAS    (Demo zu den vorgefertigten Cursorstilen im Textmodus)
-   - MAUSTEST.PAS   (Allgemeines Demo, v.a. aber bez�glich Eventhandling)
+   - MAUSTEST.PAS   (Allgemeines Demo, v.a. aber bezüglich Eventhandling)
 
    - STYLES.EXE     (Programm zum Erstellen von Mauszeigern im Grafikmodus)
 
