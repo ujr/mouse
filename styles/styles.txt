@@ -1,0 +1,27 @@
+ANLEITUNG ZU STYLES.EXE
+=======================
+
+Das Programm Styles lÑsst sie auf einfache Weise Grafikcursors er-
+stellen, die sie dann in ihren Programmen verwenden kînnen. Die
+BenutzeroberflÑche verfÅgt Åber zwei 16x16 - Gitter, eines fÅr die
+Screenmask (gesetzte Punkte sichern den Hintergrund, nicht gesetzte
+machen ihn schwarz) und eines fÅr die Cursormask (gesetzte Punkte
+werden als Cursor gezeichnet). Der rote Punkt bezeichnet den Hotspot
+(also den Bezugspunkt des Cursors) und kann durch Doppelklicks mit
+der linken Taste beliebig versetzt werden. Mit der rechten Maustaste
+kînnen Sie zwischen dem Standard-Pfeil-Cursor und ihrem eigenen
+Cursor wechseln. Das Programm beenden sie mit einem Tastendruck. Sie
+werden daraufhin gefragt, ob sie den Cursor speichern wollen. Wenn
+sie 'j' oder 'J' eingeben, wird eine Datei namens 'CURSOR.CUR' im
+aktuellen Verzeichnis erzeugt, die von folgender Form ist:
+
+  HotSpotX = ...  (X-Koordinate des Hotspots)
+  HotSpotY = ...  (Y-Koordinate des Hotspots)
+  NewCursor: tGraphCursor = (
+    ... ( hier folgen 32 Word-Zahlen, die ihren Cursor beschreiben )
+  );
+
+Diese Datei kînnen sie dann in Ihr Programm aufnehmen und wenn sie
+den Cursorstil anwenden wollen, Åbergeben sie einfach HotSpotX,
+HotSpotY und NewCursor in dieser Reihenfolge als Parameter an die
+Prozedur SetGraphCursor.
